@@ -38,15 +38,10 @@ const deleteUsers = async (req, res) => {
 }
 
 const estadoUser = async (req, res) => {
-  const { estado } = req.body;
-  const estadoUsuario = new User({
-    estado
-  })
-
-  await estadoUsuario.save()
-  
+  const { id, newEstado } = req.body;
+    await User.findByIdAndUpdate(id,{estado: newEstado})
   res.json({
-    mensaje: `Cambiando estado`
+    mensaje: `Uusario Modificado`
   })
 }
 
