@@ -1,13 +1,14 @@
 const Menu = require('../models/menu');
 
 const createMenu = async (req, res) => {
-  const { nombre, estado, precio, detalle, categoria } = req.body;
+  const { nombre, estado, precio, detalle, categoria,img } = req.body;
   const nuevoMenu = new Menu({
     nombre,
     estado,
     precio,
     detalle,
-    categoria
+    categoria,
+    img
   })
 
   await nuevoMenu.save()
@@ -30,11 +31,19 @@ const deleteMenu = async (req, res) => {
   try {
   await Menu.findByIdAndDelete(req.params.userId)
     res.json({
-      mensaje: 'Usuario eliminado'
+      mensaje: 'Menu eliminado'
     })
   } catch (error) {
     console.log(error)
   }
 }
 
-module.exports = {createMenu, getMenu, deleteMenu}
+const updateMenu = async (req, res) => {
+  const { id, newNom, newDesc, newPre, newImg } = req.body;
+    await Menu.findByIdAndUpdate(id,{nombre: newNom, detalle: newDesc, precio: newPre, img: newImg })
+  res.json({
+    mensaje: `Menu modificado`
+  })
+}
+
+module.exports = {createMenu, getMenu, deleteMenu, updateMenu}
