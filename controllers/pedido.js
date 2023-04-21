@@ -36,4 +36,12 @@ const deletePedido = async (req, res) => {
   }
 }
 
-module.exports = {createPedido, getPedido, deletePedido}
+const updatePedido = async (req, res) => {
+  const { id, newEstado} = req.body;
+    await Pedido.findByIdAndUpdate(id,{estado: newEstado })
+  res.json({
+    mensaje: `Pedido modificado`
+  })
+}
+
+module.exports = {createPedido, getPedido, deletePedido, updatePedido}
