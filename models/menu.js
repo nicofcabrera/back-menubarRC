@@ -6,7 +6,8 @@ const menu = new Schema({
   precio: String,
   detalle: String,
   categoria: String,
-  img: String
+  img: String,
+  cantidad: Number
 })
 
 module.exports = model('Menu', menu)

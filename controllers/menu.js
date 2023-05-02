@@ -1,14 +1,15 @@
 const Menu = require('../models/menu');
 
 const createMenu = async (req, res) => {
-  const { nombre, estado, precio, detalle, categoria,img } = req.body;
+  const { nombre, estado, precio, detalle, categoria,img,cantidad } = req.body;
   const nuevoMenu = new Menu({
     nombre,
     estado,
     precio,
     detalle,
     categoria,
-    img
+    img,
+    cantidad
   })
 
   await nuevoMenu.save()

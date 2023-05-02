@@ -1,7 +1,7 @@
 const User = require('../models/users')
 
 const createUser = async (req, res) => {
-  const { nombre, email, password, estado, rol } = req.body;
+  const { nombre,email, password, estado, rol } = req.body;
   const nuevoUsuario = new User({
     nombre,
     email,
@@ -16,6 +16,43 @@ const createUser = async (req, res) => {
     mensaje: `Usuario ${nombre} creado con exito`
   })
 }
+
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  // const resp = await User.find({});
+   if (await User.find({email}) === email) {
+    res.json({
+      mensaje: `Usuario ${email} coincide en DB`,
+      ingreso: true
+    })
+  } else {
+     res.json({
+       mensaje: `No coincide`,
+       ingreso: false
+    })
+  }
+  // if (email === await User.find({email}) && password === await User.find({password})) {
+  //   res.json({
+  //     mensaje: `Usuario ${email} coincide en DB`,
+  //     ingreso: true
+  //   })
+  // } else {
+  //    res.json({
+  //      mensaje: `No coincide`,
+  //      ingreso: false
+  //   })
+  // }
+
+  // try {
+  //   await User.find({ email, password })
+  //   res.json({
+  //     mensaje: `Usuario ${email} coincide en DB`
+  //   })
+  // } catch (error) {
+  //   console.log(error)
+  // }
+}
+
 
 const getUsers = async (req, res) => {
   try {
@@ -45,4 +82,4 @@ const estadoUser = async (req, res) => {
   })
 }
 
-module.exports = {createUser, getUsers, deleteUsers, estadoUser}
+module.exports = {createUser, getUsers, deleteUsers, estadoUser, loginUser}
