@@ -19,38 +19,29 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  // const resp = await User.find({});
-   if (await User.find({email}) === email) {
+  const result = await User.findOne({email});
+  
+  if (result) {
     res.json({
-      mensaje: `Usuario ${email} coincide en DB`,
-      ingreso: true
-    })
+      message: 'Coincide',
+      result
+    }) 
   } else {
      res.json({
-       mensaje: `No coincide`,
-       ingreso: false
+       message: 'ERROR'
     })
   }
-  // if (email === await User.find({email}) && password === await User.find({password})) {
+  // try {
   //   res.json({
-  //     mensaje: `Usuario ${email} coincide en DB`,
-  //     ingreso: true
+  //     result
   //   })
-  // } else {
-  //    res.json({
-  //      mensaje: `No coincide`,
-  //      ingreso: false
+    
+  // } catch (error) {
+  //   res.json({
+  //     error
   //   })
   // }
 
-  // try {
-  //   await User.find({ email, password })
-  //   res.json({
-  //     mensaje: `Usuario ${email} coincide en DB`
-  //   })
-  // } catch (error) {
-  //   console.log(error)
-  // }
 }
 
 

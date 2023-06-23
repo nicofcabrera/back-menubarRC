@@ -9,7 +9,7 @@ const createMenu = async (req, res) => {
     detalle,
     categoria,
     img,
-    cantidad
+    cantidad: 1
   })
 
   await nuevoMenu.save()
