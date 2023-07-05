@@ -1,11 +1,17 @@
 const User = require('../models/users')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
+
 
 const createUser = async (req, res) => {
-  const { nombre,email, password, estado, rol } = req.body;
+  const { nombre, email, password, estado, rol } = req.body;
+  const saltRound = 15
+  const pwEncripted = bcrypt.hashSync(password, saltRound)
+
   const nuevoUsuario = new User({
     nombre,
     email,
-    password,
+    password : pwEncripted,
     estado,
     rol
   })
@@ -19,28 +25,34 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  const result = await User.findOne({email});
-  
-  if (result) {
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.json({
+      message: 'ERROR de mail (provisorio)'
+    })
+    } 
+    
+    const result = bcrypt.compareSync(password, user.password);
+    
+    if (result) {
+      const token = jwt.sign({user},'secreta', { expiresIn: '1h' })
+      res.json({
+        message: 'Coincide',
+        result,
+        token
+      }) 
+    } else {
     res.json({
-      message: 'Coincide',
-      result
-    }) 
-  } else {
-     res.json({
-       message: 'ERROR'
+      message: 'ERROR pw (provisiorio)'
     })
   }
-  // try {
-  //   res.json({
-  //     result
-  //   })
-    
-  // } catch (error) {
-  //   res.json({
-  //     error
-  //   })
-  // }
+    } catch (error) {
+    console(error)
+  }
+
 
 }
 
