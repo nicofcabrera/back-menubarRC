@@ -12,8 +12,8 @@ const createUser = async (req, res) => {
     nombre,
     email,
     password : pwEncripted,
-    estado,
-    rol
+    estado: 'Pendiente',
+    rol: 'user'
   })
 
   await nuevoUsuario.save()
@@ -31,7 +31,7 @@ const loginUser = async (req, res) => {
 
     if (!user) {
       return res.json({
-      message: 'ERROR de mail (provisorio)'
+      message: 'ERROR de mail (provisorio'
     })
     } 
     
@@ -46,7 +46,7 @@ const loginUser = async (req, res) => {
       }) 
     } else {
     res.json({
-      message: 'ERROR pw (provisiorio)'
+      message: 'ERROR pw (provisiorio)',
     })
   }
     } catch (error) {
