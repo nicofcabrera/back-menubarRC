@@ -40,7 +40,6 @@ const loginUser = async (req, res) => {
     if (result) {
       const token = jwt.sign({user},'secreta', { expiresIn: '1h' })
       res.json({
-        message: 'Coincide',
         result,
         token
       }) 
