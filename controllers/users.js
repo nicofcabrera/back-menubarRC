@@ -41,7 +41,8 @@ const loginUser = async (req, res) => {
       const token = jwt.sign({user},'secreta', { expiresIn: '1h' })
       res.json({
         result,
-        token
+        token,
+        user
       }) 
     } else {
     res.json({
