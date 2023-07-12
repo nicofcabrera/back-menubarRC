@@ -15,6 +15,6 @@ route.post('/userlogin',
 , loginUser)
 route.get('/get-users', getUsers)
 route.patch('/patch-users', estadoUser)
-route.delete('/:userId',jwtValidator, deleteUsers)
+route.delete('/:userId', deleteUsers)
 
 module.exports = route;
